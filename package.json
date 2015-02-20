@@ -1,0 +1,27 @@
+{
+  "name": "WikiLab",
+  "version": "1.0.0",
+  "description": "A wiki for something. Lab 1 olinjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rvanderheyde/WikiLab.git"
+  },
+  "keywords": [
+    "SPORTS",
+    "sports",
+    "Sports"
+  ],
+  "author": "Rahil and Radmer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rvanderheyde/WikiLab/issues"
+  },
+  "homepage": "https://github.com/rvanderheyde/WikiLab",
+  "dependencies": {
+    "express": "^4.11.2"
+  }
+}
