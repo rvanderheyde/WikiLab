@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module('wiki', []);
+	var app = angular.module("wiki", []);
 
-	app.controler('navCtrl', function(){});
+	app.controller('NavCtrl', function(){});
 })();
