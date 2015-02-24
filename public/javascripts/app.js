@@ -10,6 +10,7 @@
 
 		this.fbLogin = function(){
 			console.log('Button Pushed');
+			
 		};
 	});
 })();
