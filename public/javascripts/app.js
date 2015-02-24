@@ -1,5 +1,15 @@
 (function(){
 	var app = angular.module("wiki", []);
 
-	app.controller('NavCtrl', function(){});
+	app.controller('NavController', function(){
+		this.login = false;
+
+		this.checkLogin = function(username){
+			this.login = true;
+		};
+
+		this.fbLogin = function(){
+			console.log('Button Pushed');
+		};
+	});
 })();
