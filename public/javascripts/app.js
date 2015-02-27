@@ -1,35 +1,12 @@
 (function(){
 	var app = angular.module("wiki", ['ngCookies']);
 
-	// app.controller('NavController', ['$cookieStore', function($cookieStore){
-	// 	this.login = false;
-	// 	this.home = true; 
-
-	// 	this.checkLogin = function(){
-	// 		console.log(document.cookie);
-	// 		return false;
-	// 	};
-
-	// 	this.fbLogin = function(){
-	// 		console.log('Button Pushed');
-			
-	// 	};
-	// }]);
+	app.controller('HomeController', ['$http', function($http){
+		$http.get()
+	}]);
 
 	app.controller('NavController',['$cookieStore', '$http', function($cookieStore, $http){
 		this.check = false;
-
-		this.checkLogin = function(callback){
-			if(this.check === false){
-				this.check = true;
-				console.log('Check Check 66')
-				var check = callback();
-				console.log(check);
-				return check
-			} else {
-				return false;
-			}
-		};
 
 		this.bakeCookie = function(){
 			console.log(1 + $cookieStore.get('username'));
