@@ -6,6 +6,7 @@ var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+// var session = require('client-session');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -48,7 +49,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-    secret: 'secret',
+    secret: 'This is not a secret ;)',
     resave: false,
     saveUninitialized: true
 }));
@@ -59,6 +60,8 @@ app.use(passport.session());
 app.get('/', index.homeRender);
 app.get('/auth/facebook',passport.authenticate('facebook'), auth.fbAuth);
 app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }), auth.fbAuthCallback);
+app.get('/session/username', auth.getUsername);
+app.get('/db/pages', )
 
 app.listen(PORT, function() {
   console.log("Application running on port:", PORT);
