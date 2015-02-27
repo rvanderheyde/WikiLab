@@ -22,7 +22,7 @@ routes.loggingOut = function(req, res) {
   req.session.userid = '';
   
   // send something to client to change client
-  res.send('.');
+  res.send('logout');
 };
 
 module.exports = routes;
