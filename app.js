@@ -61,7 +61,7 @@ app.get('/', index.homeRender);
 app.get('/auth/facebook',passport.authenticate('facebook'), auth.fbAuth);
 app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }), auth.fbAuthCallback);
 app.get('/session/username', auth.getUsername);
-app.get('/db/pages', )
+app.get('/db/pages', index.getPages);
 
 app.listen(PORT, function() {
   console.log("Application running on port:", PORT);
