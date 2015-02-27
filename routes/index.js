@@ -6,4 +6,8 @@ routes.homeRender = function(req, res){
 	res.sendFile(url);
 };
 
+routes.getPages = function(req, res){
+
+};
+
 module.exports = routes;
