@@ -30,10 +30,10 @@
       <p>Check out all our pages!</p>
     </div>
     <div ng-controller="BodyController as content">
-      <form id='new_page' ng-submit="content.makePost()">
-        Title <input type='text' name='title'>
-        Unique URL <input type='text' name='url'>
-        Content <textarea name='textarea'></textarea>
+      <form id='new_page' name="pageForm" ng-submit="pageForm.$valid && content.makePost()">
+        Title <input ng-model='content.page.title' class='blank' type='text' name='title' required>
+        Unique URL <input ng-model='content.page.url' class='blank' type='text' name='url' required>
+        Content <textarea ng-model='content.page.content' class='blank' name='textarea' rows='10' columns='50' required></textarea>
         <input type='submit' value='Create new page!'>
       </form>
     </div>

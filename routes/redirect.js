@@ -4,7 +4,8 @@ var Post = schema.Post;
 var exports = {};
 
 // Vote handling function
-exports.vote = function (data) {
+exports.vote = function (req, res) {
+  var data = req.body;
   // might have to change this
   var name = data.username;
   var page = data.page;
@@ -53,22 +54,27 @@ exports.vote = function (data) {
 };
 
 // submit a new page
-exports.newPage = function (data) {
-  // need to actually see how data object is structured
-  url = data.url;
-  title = data.title;
-  content = data.content;
-  user = data.user;
+exports.newPage = function (req, res) {
+  Post.find({})
+    .exec(function (err, posts) {
+      console.log('THESE ALL THE POSTS BRUH');
+      console.log(posts)
+      console.log('')
+    })
+
+  var data = req.body;
 
   var post = new Post({
-    url: url,
-    title: title,
-    content: content,
+    url: data.url,
+    title: data.title,
+    content: data.content,
     locked: false,
-    author: user,
+    author: data.user,
     views: 0,
     votes: 0
   });
+  console.log('NEW POST YEEE');
+  console.log(post);
 
   post.save(function (err) {
     if (err) {
@@ -82,7 +88,8 @@ exports.newPage = function (data) {
   });
 }
 
-exports.editPage = function (data) {
+exports.editPage = function (req, res) {
+  var data = req.body;
   url = data.url;
   content = data.content;
 

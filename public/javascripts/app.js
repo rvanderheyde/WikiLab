@@ -45,15 +45,27 @@
 				$cookieStore.remove('username');
 				$scope.check = false;
 			}).error(function(data,status,headers,config){
-				alert("There was an err loggin out")
+				alert("There was an err loggin out");
 			})
 		}
 		$scope.check = this.bakeCookie();
 	}]);
 
   app.controller('BodyController', ['$cookieStore', '$http', function($cookieStore, $http) {
+    this.page = {};
     this.makePost = function () {
-      console.log($cookieStore);
+      data = this.page;
+      data.user = $cookieStore.get('username');
+      // this is probably a stupid way to make the form blank
+      $('#new_page').find('.blank').val('');
+
+      $http.post('newPost', data)
+        .success(function (data, status) {
+          console.log(data);
+          console.log('yeeee boiii');
+        }).error(function (data, status) {
+          alert('There was an error making this post bruh');
+        })
     };
   }]);
 
