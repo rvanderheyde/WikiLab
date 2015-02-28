@@ -12,20 +12,7 @@
     <link rel="stylesheet" href="css/main.css"/>
   </head>
   <body>
-  	<nav ng-controller="NavController as nav" class="top-bar">
-  		<ul class="title-area">
-  			<li class="name"></li>
-  			<li class="toggle-topbar menu-icon"><a href = "#"><span>Menu</span></a></li>
-  		</ul>
-  		<section class="top-bar-section">
-  			<ul class="left">
-  				<li ng-show="nav.username"><button ng-click="nav.eatCookie()">Logout</li>
-  				<li ng-hide="nav.username"><a href="/auth/facebook">Login</a></li>
-  			</ul>
-        <ul class="right">
-          <li ng-show="nav.username"><button>{{nav.username}}</li>
-  		</section>
-  	</nav>
+  	<nav-bar></nav-bar>
     <div id='links'>
       <p>Check out all our pages!</p>
     </div>
