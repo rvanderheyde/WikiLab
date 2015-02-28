@@ -26,11 +26,11 @@
           <li ng-show="nav.check"><a>{{nav.username}}</a></li>
   		</section>
   	</nav>
-    <div id='links' ng-controller="LinkController as link">
+    <div id='links'>
       <p>Check out all our pages!</p>
     </div>
-    <div>
-      <form id='new_page'>
+    <div ng-controller="BodyController as content">
+      <form id='new_page' ng-submit="content.makePost()">
         Title <input type='text' name='title'>
         Unique URL <input type='text' name='url'>
         Content <textarea name='textarea'></textarea>
