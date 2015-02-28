@@ -40,4 +40,14 @@ function emptyObjTest(obj){
 	return Object.keys(obj).length === 0;
 };
 
+// Called by client when logging out to get rid of user credentials from session
+routes.loggingOut = function(req, res) {
+  // might have to change this depending on how we save things
+  req.session.passport = {};
+  req.session.userid = '';
+  
+  // send something to client to change client
+  res.send('logout');
+};
+
 module.exports = routes;

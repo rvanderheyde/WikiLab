@@ -11,6 +11,7 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 var index = require('./routes/index');
+var redirect = require('./routes/redirect');
 var auth = require('./routes/auth');
 
 var app = express();
@@ -56,7 +57,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.get('/', index.homeRender);
 app.get('/db/pages', index.getPages);
 app.get('/auth/facebook',passport.authenticate('facebook'), auth.fbAuth);
@@ -65,11 +65,16 @@ app.get('/session/username', auth.getUsername);
 app.get('/db/pages/content');
 app.post('/votes');
 
+app.post('/newPost', redirect.newPage);
+app.post('/editPost', redirect.editPage);
+app.post('/newPost', redirect.newPage);
+app.post('/vote', redirect.vote);
+
 app.listen(PORT, function() {
   console.log("Application running on port:", PORT);
 });
 
 function ensureAuthenticated(req, res, next) {
-if (req.isAuthenticated()) { return next(); }
-res.redirect('/')
+  if (req.isAuthenticated()) { return next(); }
+    res.redirect('/')
 }
