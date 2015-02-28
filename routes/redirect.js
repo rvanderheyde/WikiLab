@@ -60,11 +60,50 @@ exports.newPage = function (data) {
   content = data.content;
   user = data.user;
 
-  post = new Post({
-    // do shit here
+  var post = new Post({
+    url: url,
+    title: title,
+    content: content,
+    locked: false,
+    author: user,
+    views: 0,
+    votes: 0
+  });
+
+  post.save(function (err) {
+    if (err) {
+      console.log('Problem saving new post');
+      res.status(500).json(err);
+    } else {
+      console.log('yayy made a new post');
+      // send post back to client
+      res.json(post);
+    }
   });
 }
 
+exports.editPage = function (data) {
+  url = data.url;
+  content = data.content;
 
+  Post.find({url: url})
+    .exec(function (err, post) {
+      if (err) {
+        console.log('couldnt find this post');
+        res.status(500).json(err);
+      } else {
+        post.content = content;
+        post.save(function (err) {
+          if (err) {
+            console.log('couldnt save edited post');
+          } else {
+            console.log('yay successfully edited post');
+            // send back post to client
+            res.json(post);
+          }
+        })
+      }
+    })
+}
 
 module.exports = exports;

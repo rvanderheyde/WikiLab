@@ -17,10 +17,12 @@ var userSchema = mongoose.Schema({
 exports.User = mongoose.model('User', userSchema);
 
 var postSchema = mongoose.Schema({
+  url: String,
   title: String,
   content: String,
   locked: Boolean,
-  dateCreated: Date,
+  author: String,
+  dateCreated: {type: Date, default: Date.now},
   views: Number,
   votes: Number
 });
