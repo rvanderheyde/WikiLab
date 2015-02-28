@@ -5,50 +5,73 @@
 		$http.get()
 	}]);
 
-	app.controller('NavController',['$cookieStore', '$http','$scope', function($cookieStore, $http, $scope){
-		this.checksum = 0;
-		$scope.username = 'test';
+	app.directive('navBar', ['$cookieStore', '$http', function($cookieStore, $http){
+		return {
+			restrict: 'E',
+			templateUrl: '../templates/nav.html',
+			controller: function(){
+				var user = this;
+				this.username = '';
 
-		this.bakeCookie = function(){
-			if(this.checksum === 0){
-				console.log(1 + $cookieStore.get('username'));
-				if($cookieStore.get('username') === undefined){
-					$http.get('/session/username').success(function(data, status, headers, config){
-						if (data !=='No User'){
-							var username = data.userName;
-							$cookieStore.put('username', username);
-							console.log(2 + $cookieStore.get('username'))
-							$scope.username = username;
-							// this.check = true;
-							return true;
-						} else {
-							return false;
-						}
-					}).error(function(data, status, headers, config){
-						alert("There was an err handling" + data);
-					});
-				} else if($cookieStore.get('username')){
-					// this.check = true;
-					console.log($cookieStore.get('username'));
-					return true;
-				} else {
-					// this.check = false;
-					console.log('WAT!');
-					return false;
-				}
-			} else { console.log('done'); return $scope.check}
+				$http.get('/session/username').success(function(data){
+					//bake the cookie with username from server to control view.
+					if (data !== 'error'){
+						console.log(data);
+						var username = data.userName;
+						$cookieStore.put('username', username);
+						user.username = username;
+					}
+				}).error(function(data){
+					alert(data);	
+				});
+
+
+				this.eatCookie = function(){
+					//eat the cookie!!(destroys it)
+					var username = $cookieStore.get('username');
+					$http.post('/session/end').success(function(data, status, headers, config){
+						console.log(username);
+						$cookieStore.remove('username');
+						user.username = '';
+					}).error(function(data,status,headers,config){
+						alert("There was an err loggin out")
+					})
+				};
+			},
+			controllerAs:'nav'
 		};
+	}]);
+
+	app.controller('NavController',['$cookieStore', '$http','$scope', function($cookieStore, $http, $scope){
+		var user = this;
+		this.username = '';
+
+		$http.get('/session/username').success(function(data){
+			//bake the cookie with username from server to control view.
+			if (data !== 'error'){
+				console.log(data);
+				var username = data.userName;
+				$cookieStore.put('username', username);
+				user.username = username;
+			}
+		}).error(function(data){
+			alert(data);	
+		});
+
 
 		this.eatCookie = function(){
+			//eat the cookie!!(destroys it)
 			var username = $cookieStore.get('username');
 			$http.post('/session/end').success(function(data, status, headers, config){
+				console.log(username);
 				$cookieStore.remove('username');
 				$scope.check = false;
+				user.username = '';
 			}).error(function(data,status,headers,config){
 				alert("There was an err loggin out");
 			})
 		}
-		$scope.check = this.bakeCookie();
+
 	}]);
 
   app.controller('BodyController', ['$cookieStore', '$http', function($cookieStore, $http) {
