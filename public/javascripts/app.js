@@ -58,7 +58,6 @@
 			alert(data);	
 		});
 
-
 		this.eatCookie = function(){
 			//eat the cookie!!(destroys it)
 			var username = $cookieStore.get('username');
@@ -89,7 +88,14 @@
         }).error(function (data, status) {
           alert('There was an error making this post bruh');
         })
-    };
+      };
+
+      this.loggedIn = function () {
+        console.log('logged in?');
+        console.log($cookieStore.get('username'));
+        return ($cookieStore.get('username'));
+      };
+    
   }]);
 
 })();
