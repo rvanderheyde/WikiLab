@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module("wiki", ['ngCookies']);
+  var app = angular.module("wiki", ['ngCookies']);
 
 	app.controller('HomeController', ['$http', function($http){
 		$http.get()
@@ -30,6 +30,13 @@
 				alert("There was an err loggin out")
 			})
 		}
-			
+
 	}]);
+
+  app.controller('BodyController', ['$cookieStore', '$http', function($cookieStore, $http) {
+    this.makePost = function () {
+      console.log($cookieStore);
+    };
+  }]);
+
 })();

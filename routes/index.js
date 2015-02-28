@@ -1,5 +1,11 @@
 var path = require('path');
+<<<<<<< Updated upstream
 var Post = require('../models/schema').Post;
+=======
+var schema = require('./../models/schema');
+var User = schema.User;
+var Post = schema.Post;
+>>>>>>> Stashed changes
 routes = {}
 
 routes.homeRender = function(req, res){
