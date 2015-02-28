@@ -62,10 +62,8 @@ app.get('/db/pages', index.getPages);
 app.get('/auth/facebook',passport.authenticate('facebook'), auth.fbAuth);
 app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }), auth.fbAuthCallback);
 app.get('/session/username', auth.getUsername);
-app.get('/db/pages/content');
-app.post('/votes');
+// app.get('/db/pages', index.getPages);
 
-app.post('/newPost', redirect.newPage);
 app.post('/editPost', redirect.editPage);
 app.post('/newPost', redirect.newPage);
 app.post('/vote', redirect.vote);
