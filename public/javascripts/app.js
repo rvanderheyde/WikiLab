@@ -12,12 +12,14 @@
       controllerAs: 'edit'
     });
 
-    $locationProvider.html5Mode(true);
   }]);
   
   app.directive('linkList', ['$http', '$location', function($http, $location){
     return {
-      restrict: 'E'
+      restrict: 'E',
+      templateUrl: 'linkList.html',
+      controller:
+      controllerAs: 
     };
   }]);
 
