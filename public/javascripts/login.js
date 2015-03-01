@@ -7,7 +7,7 @@
 			templateUrl: '../templates/nav.html',
 			controller: function(){
 				var user = this;
-				this.username = '';
+				this.username = $cookieStore.get('username');
 
 				$http.get('/session/username').success(function(data){
 					//bake the cookie with username from server to control view.
