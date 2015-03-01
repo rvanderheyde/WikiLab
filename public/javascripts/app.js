@@ -12,7 +12,13 @@
       controllerAs: 'edit'
     });
 
-    $locationProvider.html5Mode(true);
+    // $locationProvider.html5Mode(true);
+  }]);
+  
+  app.directive('linkList', ['$http', '$location', function($http, $location){
+    return {
+      restrict: 'E'
+    };
   }]);
 
 	app.controller('LinkController', ['$http', '$location', function($http, $location){
@@ -45,7 +51,7 @@
 		}
 	}]);
 
-  app.controller('BodyController', ['$cookieStore', '$http', function($cookieStore, $http) {
+  app.controller('BodyController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location) {
     this.page = {};
     this.makePost = function () {
       data = this.page;
@@ -89,5 +95,5 @@
   app.controller('PageController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location){
 
   }]);
-  
+
 })();
