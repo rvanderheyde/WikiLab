@@ -11,7 +11,7 @@ routes.homeRender = function(req, res){
 
 routes.getPages = function(req, res){
 	Post.find({}, function(err, data){
-		if (error){ console.log(error); }
+		if (err){ console.log(error); }
 		var obj = { pages: data };
 		res.send(obj);
 	});
