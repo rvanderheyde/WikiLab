@@ -120,7 +120,16 @@
         page.data = data;
       }).error(function (data, status) {
         alert(status + 'bruh you fucked this page up' + data);
-      })
+      });
+
+    this.vote = function(up) {
+      var data = {};
+      data.page = $location.path();
+      data.vote = up;
+      console.log(data);
+    }
+
+
   }]);
 
 })();

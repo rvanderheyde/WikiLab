@@ -3,4 +3,9 @@
   <h3>Written by {{page.data.author}}</h3>
   <p>{{page.data.content}}</p>
   <a class="button small" href="{{page.data.url + '/edit'}}">Edit</a>
+  <div id='voting'>
+    <h6>{{page.data.votes}} Upvotes</h6>
+    <button ng-click='page.vote(true)' class="button tiny round">Upvote</button>
+    <button ng-click='page.vote(false)' class="button tiny round">Downvote</button>
+  </div>
 </div>
