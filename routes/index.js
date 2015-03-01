@@ -13,8 +13,12 @@ routes.getPages = function(req, res){
 	Post.find({}, function(err, data){
 		if (err){ console.log(error); }
 		var obj = { pages: data };
+		console.log(obj);
 		res.send(obj);
 	});
 };
 
+routes.gettaPage = function(req,res){
+
+};
 module.exports = routes;

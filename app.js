@@ -63,7 +63,7 @@ app.get('/auth/facebook',passport.authenticate('facebook'), auth.fbAuth);
 app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }), auth.fbAuthCallback);
 app.get('/session/username', auth.getUsername);
 app.post('/session/end', auth.loggingOut);
-// app.get('/db/pages', index.getPages);
+app.get('/pages/:pagename', index.gettaPage);
 
 app.post('/editPost', redirect.editPage);
 app.post('/newPost', redirect.newPage);
