@@ -20,6 +20,7 @@
         <h5>Blank Space</h5>
         <li ng-repeat="link in linkCtrl.paths">
           <a class="button small" href="{{'/pages/'+link.url}}">{{link.title}}</a>
+          <button class="small" ng-click="linkCtrl.goTo({{link.url}})">{{link.title}}</button>
         </li>
       </ul>
     </div>
