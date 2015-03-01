@@ -15,6 +15,12 @@
     $locationProvider.html5Mode(true);
   }]);
   
+  app.directive('linkList', ['$http', '$location', function($http, $location){
+    return {
+      restrict: 'E'
+    };
+  }]);
+
   app.controller('LinkController', ['$http', '$location', function($http, $location){
     var links = this;
     this.paths = [];
@@ -81,5 +87,5 @@
   app.controller('PageController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location){
 
   }]);
-  
+
 })();
