@@ -1,5 +1,5 @@
 (function(){
-  var app = angular.module("wiki", ['ngRoute', 'ngCookies', 'nav-directives']);
+  var app = angular.module("wiki", ['ngRoute', 'ngCookies', 'nav-directives', 'links-directive']);
 
   app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $routeProvider.when('/pages/:pagename', {
@@ -12,57 +12,7 @@
       controllerAs: 'edit'
     });
 
-  }]);
-  
-  app.directive('linkList', ['$http', '$location', function($http, $location){
-    return {
-      restrict: 'E',
-      templateUrl: 'linkList.html',
-      controller: function(){
-        var links = this;
-        this.paths = [];
-
-        $http.get('/db/pages').success(function(data, status){
-          links.paths = data.pages;
-        }).error(function(data, status){
-          alert(status, data);
-        })
-
-        this.checkPage = function(){
-          var curPath = $location.path();
-          if (curPath.length < 2){
-            return true;
-          } else if (curPath === '/_=_') {
-            return true;
-          } else {
-            return false
-          }
-        }
-      },
-      controllerAs: 
-    };
-  }]);
-
-  app.controller('LinkController', ['$http', '$location', function($http, $location){
-    var links = this;
-    this.paths = [];
-
-    $http.get('/db/pages').success(function(data, status){
-      links.paths = data.pages;
-    }).error(function(data, status){
-      alert(status, data);
-    })
-
-    this.checkPage = function(){
-      var curPath = $location.path();
-      if (curPath.length < 2){
-        return true;
-      } else if (curPath === '/_=_') {
-        return true;
-      } else {
-        return false
-      }
-    }
+    $locationProvider.html5Mode({ enabled: true, requireBase: false});
   }]);
 
   app.controller('BodyController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location) {
@@ -103,11 +53,23 @@
   }]);
   
   app.controller('EditController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location){
+    var stuff = this;
+    stuff.page = {};
+    this.result = {};
 
+    var path = $location.path();
+
+    $http.get(path).success(function(data, status){
+      stuff.page = data;
+      this.result.title = stuff.page.title;
+    }).error(function(data, status){ console.log(status); });
+
+    this.editPage = function(){
+    }
   }]);
 
   app.controller('PageController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location){
-
+    
   }]);
 
 })();

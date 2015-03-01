@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module('nav-directives', []);
+	var app = angular.module('nav-directives', ['ngCookies']);
 
 	app.directive('navBar', ['$cookieStore', '$http', function($cookieStore, $http){
 		return {

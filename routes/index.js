@@ -19,6 +19,7 @@ routes.getPages = function(req, res){
 };
 
 routes.gettaPage = function(req,res){
-
+	var url = path.resolve( __dirname + '../../views/main.html');
+	res.sendFile(url);
 };
 module.exports = routes;
