@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
     <script type="text/javascript" src="/javascripts/foundation.min.js"></script>
     <script type="text/javascript" src="/javascripts/login.js"></script>
+    <script type="text/javascript" src="/javascripts/links.js"></script>
     <script type="text/javascript" src="/javascripts/app.js"></script>
     <link rel="stylesheet" href="css/foundation.min.css">
     <link rel="stylesheet" href="css/main.css"/>
@@ -17,24 +18,16 @@
   </head>
   <body>
   	<nav-bar></nav-bar>
-    <div id='content'>
-      <div id='links' ng-controller='LinkController as linkCtrl' ng-show="linkCtrl.checkPage()">
-        <ul>
-          <h5>Blank Space</h5>
-          <li ng-repeat="link in linkCtrl.paths">
-            <a class="button small" href="{{'pages/'+ link.url}}">{{link.title}}</a>
-          </li>
-        </ul>
-      </div>
-      <div ng-controller="BodyController as content" ng-show="content.checkPage() && content.loggedIn()">
-        <form id='new_page' name="pageForm" ng-submit="pageForm.$valid && content.makePost()">
-          Title <input ng-model='content.page.title' class='blank' type='text' name='title' required>
-          Unique URL <input ng-model='content.page.url' class='blank' type='text' name='url' required>
-          Content <textarea ng-model='content.page.content' class='blank' name='textarea' rows='10' columns='50' required></textarea>
-          <input type='submit' value='Create new page!'>
-        </form>
-      </div>
-      <div ng-view></div>
+    <link-list></link-list>
+    <div ng-controller="BodyController as content" ng-show="content.checkPage() && content.loggedIn()">
+    <a ng-show="content.submit" class="button" href="{{'/pages/'+content.page.url}}">{{content.page.title}}</a>
+      <form id='new_page' name="pageForm" ng-submit="pageForm.$valid && content.makePost()">
+        Title <input ng-model='content.page.title' class='blank' type='text' name='title' required>
+        Unique URL <input ng-model='content.page.url' class='blank' type='text' name='url' required>
+        Content <textarea ng-model='content.page.content' class='blank' name='textarea' rows='10' columns='50' required></textarea>
+        <input type='submit' value='Create new page!'>
+      </form>
     </div>
+    <div ng-view></div>
   </body>
 </html>

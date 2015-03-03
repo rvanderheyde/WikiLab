@@ -2,6 +2,7 @@ routes = {};
 var User = require('../models/schema').User;
 
 routes.fbAuth = function(req, res){
+	
 };
 
 routes.fbAuthCallback = function(req, res){

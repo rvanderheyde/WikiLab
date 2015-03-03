@@ -127,13 +127,15 @@ exports.editPage = function (req, res) {
   var data = req.body;
   url = data.url;
   content = data.content;
+  console.log(content);
 
-  Post.find({url: url})
+  Post.findOne({url: url})
     .exec(function (err, post) {
       if (err) {
         console.log('couldnt find this post');
         res.status(500).json(err);
       } else {
+        console.log(post)
         post.content = content;
         post.save(function (err) {
           if (err) {

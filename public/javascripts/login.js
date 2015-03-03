@@ -1,7 +1,7 @@
 (function(){
-	var app = angular.module('nav-directives', []);
+	var app = angular.module('nav-directives', ['ngCookies']);
 
-	app.directive('navBar', ['$cookieStore', '$http', function($cookieStore, $http){
+	app.directive('navBar', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location){
 		return {
 			restrict: 'E',
 			templateUrl: '../templates/nav.html',
@@ -12,7 +12,6 @@
 				$http.get('/session/username').success(function(data){
 					//bake the cookie with username from server to control view.
 					if (data !== 'error'){
-						console.log(data);
 						var username = data.userName;
 						$cookieStore.put('username', username);
 						user.username = username;
@@ -21,6 +20,14 @@
 					alert(data);	
 				});
 
+				this.checkHome = function(){
+					var path = $location.path();
+					if(path.length > 1){
+						return true;
+					} else {
+						return false;
+					}
+				}
 
 				this.eatCookie = function(){
 					//eat the cookie!!(destroys it)
