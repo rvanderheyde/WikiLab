@@ -17,22 +17,24 @@
   </head>
   <body>
   	<nav-bar></nav-bar>
-    <div id='links' ng-controller='LinkController as linkCtrl' ng-show="linkCtrl.checkPage()">
-      <ul>
-        <h5>Blank Space</h5>
-        <li ng-repeat="link in linkCtrl.paths">
-          <a class="button small" href="{{'pages/'+ link.url}}">{{link.title}}</a>
-        </li>
-      </ul>
+    <div id='content'>
+      <div id='links' ng-controller='LinkController as linkCtrl' ng-show="linkCtrl.checkPage()">
+        <ul>
+          <h5>Blank Space</h5>
+          <li ng-repeat="link in linkCtrl.paths">
+            <a class="button small" href="{{'pages/'+ link.url}}">{{link.title}}</a>
+          </li>
+        </ul>
+      </div>
+      <div ng-controller="BodyController as content" ng-show="content.checkPage() && content.loggedIn()">
+        <form id='new_page' name="pageForm" ng-submit="pageForm.$valid && content.makePost()">
+          Title <input ng-model='content.page.title' class='blank' type='text' name='title' required>
+          Unique URL <input ng-model='content.page.url' class='blank' type='text' name='url' required>
+          Content <textarea ng-model='content.page.content' class='blank' name='textarea' rows='10' columns='50' required></textarea>
+          <input type='submit' value='Create new page!'>
+        </form>
+      </div>
+      <div ng-view></div>
     </div>
-    <div ng-controller="BodyController as content" ng-show="content.checkPage() && content.loggedIn()">
-      <form id='new_page' name="pageForm" ng-submit="pageForm.$valid && content.makePost()">
-        Title <input ng-model='content.page.title' class='blank' type='text' name='title' required>
-        Unique URL <input ng-model='content.page.url' class='blank' type='text' name='url' required>
-        Content <textarea ng-model='content.page.content' class='blank' name='textarea' rows='10' columns='50' required></textarea>
-        <input type='submit' value='Create new page!'>
-      </form>
-    </div>
-    <div ng-view></div>
   </body>
 </html>

@@ -10,6 +10,8 @@ exports.vote = function (req, res) {
   var name = data.username;
   var page = data.page;
   var vote = data.vote;
+  console.log('');
+  console.log(data);
 
   User.findOne({name: name})
     .exec(function (err, user) {
@@ -17,19 +19,49 @@ exports.vote = function (req, res) {
         console.log('database call failed');
         res.status(500).json(err);
       } else {
-        Post.findOne({title: page})
+        Post.findOne({url: page})
           .exec(function (err, post) {
             if (err) {
               console.log('could not find post');
               res.status(500).json(err);
             } else {
-              // assuming vote is a bool
-              if (vote) {
-                post.votes += 1;
-                user.page = 1;
+              var up_index = user.upvotes.indexOf(page);
+              var down_index = user.downvotes.indexOf(page);
+              console.log('PREVIOUS USER');
+              console.log(user);
+              console.log('UP INDEX: ' + up_index);
+              console.log('DOWN INDEX: ' + up_index);
+              if (up_index !== -1) {
+                if (!vote) {
+                  console.log('PREVIOUSLY UPVOTED, NOW DOWNVOTING');
+                  post.votes -= 2;
+                  user.downvotes.push(page);
+                } else {
+                  console.log('PREVIOUSLY UPVOTED, NOW NOTHING');
+                  post.votes -= 1;
+                }
+                user.upvotes.splice(up_index, 1);
+              } else if (down_index !== -1) {
+                if (vote) {
+                  console.log('PREVIOUSLY DOWN, NOW UP');
+                  post.votes += 2;
+                  user.upvotes.push(page);
+                } else {
+                  console.log('PREVIOUSLY DOWN, NOW NOTHING');
+                  post.votes += 1;
+                }
+                user.downvotes.splice(down_index, 1);
               } else {
-                post.votes -= 1;
-                user.page = -1;
+                // not upvoted or downvoted
+                if (vote) {
+                  console.log('NEW AND UP')
+                  post.votes += 1;
+                  user.upvotes.push(page);
+                } else {
+                  console.log('NEW AND DOWN')
+                  post.votes -= 1;
+                  user.downvotes.push(page);
+                }
               }
               post.save(function (err) {
                 if (err) {
@@ -41,12 +73,15 @@ exports.vote = function (req, res) {
                       console.log('unable to save user');
                       res.status(500).json(err);
                     } else {
-                      console.log('yeee it all works')
-                      res.json({vote: vote});
+                      console.log(user);
+                      User.findOne({name: name}, function (err, updated_user) {
+                        console.log(updated_user);
+                      })
+                      res.json(post);
                     }
                   });
                 }
-              })
+              });
             }
           });
       }

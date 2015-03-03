@@ -11,7 +11,8 @@ db.once('open', function (callback) {});
 // https://groups.google.com/forum/#!topic/mongoose-orm/3wmwUX5Fve4
 var userSchema = mongoose.Schema({
   name: String,
-  votes: {}
+  upvotes: [String],
+  downvotes: [String]
 });
 
 exports.User = mongoose.model('User', userSchema);
