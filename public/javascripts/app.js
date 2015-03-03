@@ -18,43 +18,6 @@
       requireBase: false
     });
   }]);  
-
-  
-
-  app.controller('BodyController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location) {
-    this.page = {};
-    this.submit=false;
-    this.makePost = function () {
-      data = this.page;
-      data.user = $cookieStore.get('username');
-      // this is probably a stupid way to make the form blank
-      // $('#new_page').find('.blank').val('');
-      this.page = {};
-      this.submit=true;
-      $http.post('newPost', data)
-        .success(function (data, status) {
-          console.log(data);
-          console.log('yeeee boiii');
-        }).error(function (data, status) {
-          alert('There was an error making this post bruh');
-        })
-      };
-
-      this.loggedIn = function () {
-        return ($cookieStore.get('username'));
-      };
-
-      this.checkPage = function(){
-        var curPath = $location.path();
-        if (curPath.length < 2){
-          return true;
-        } else if (curPath === '/_=_') {
-          return true;
-        } else {
-          return false
-        }
-      }
-  }]);
   
   app.controller('EditController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location){
     var stuff = this;
