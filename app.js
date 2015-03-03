@@ -21,7 +21,7 @@ var app = express();
 //environment variables
 var mongoURI = process.env.MONGOURI || "mongodb://localhost/test";
 var PORT = process.env.PORT || 3000;
-var CLIENTID= process.env.CLIENTID || require('./oauth.js').facebook.clientID;
+var CLIENTID = process.env.CLIENTID || require('./oauth.js').facebook.clientID;
 var CLIENTSECRET = process.env.CLIENTSECRET || require('./oauth.js').facebook.clientSecret;
 var CALLBACKURL = process.env.CALLBACKURL || require('./oauth.js').facebook.callbackURL;
 
@@ -71,7 +71,7 @@ app.post('/newPost', redirect.newPage);
 app.post('/vote', redirect.vote);
 //Facebook login, not really part of our angular app.
 app.get('/auth/facebook', passport.authenticate('facebook'), auth.fbAuth);
-app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }), auth.fbAuthCallback);
+app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/' }), auth.fbAuthCallback);
 
 app.listen(PORT, function() {
   console.log("Application running on port:", PORT);
