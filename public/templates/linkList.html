@@ -1,7 +1,7 @@
  <div id='links' ng-show="linkCtrl.checkPage()">
   <ul>
-    <h5>Blank Space</h5>
-    <li ng-repeat="link in linkCtrl.paths">
+    <h5>Pages</h5>
+    <li class="no-bullet" ng-repeat="link in linkCtrl.paths">
       <a class="button small" href="{{'/pages/'+ link.url}}">{{link.title}}</a>
     </li>
   </ul>

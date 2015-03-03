@@ -7,7 +7,7 @@
       controller: 'PageController',
       controllerAs: 'page'
     }).when('/pages/:pagename/edit', {
-      templateUrl: '../templates/edit.html',
+      templateUrl: '../../templates/edit.html',
       controller: 'EditController',
       controllerAs: 'edit'
     }).otherwise({redirectTo: '/'});
@@ -23,26 +23,24 @@
 
   app.controller('BodyController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location) {
     this.page = {};
+    this.submit=false;
     this.makePost = function () {
       data = this.page;
       data.user = $cookieStore.get('username');
       // this is probably a stupid way to make the form blank
       // $('#new_page').find('.blank').val('');
       this.page = {};
-
+      this.submit=true;
       $http.post('newPost', data)
         .success(function (data, status) {
           console.log(data);
           console.log('yeeee boiii');
-          // this.page = {};
         }).error(function (data, status) {
           alert('There was an error making this post bruh');
         })
       };
 
       this.loggedIn = function () {
-        console.log('logged in?');
-        console.log($cookieStore.get('username'));
         return ($cookieStore.get('username'));
       };
 
@@ -61,16 +59,23 @@
   app.controller('EditController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location){
     var stuff = this;
     stuff.page = {};
-    this.result = {};
-
+  
+    console.log('This works?')
     var path = $location.path();
 
     $http.get(path).success(function(data, status){
       stuff.page = data;
-      this.result.title = stuff.page.title;
+      console.log('Yes, yes it does');
+      console.log(stuff);
     }).error(function(data, status){ console.log(status); });
 
     this.editPage = function(){
+      console.log(stuff.page)
+      var data = stuff.page
+      stuff.page = {}
+      $http.post('/editPost', data).success(function(data, status){
+        $location.path('/pages/' + data.url)
+      }).error(function(data, status){ alert(status) })
     }
   }]);
 

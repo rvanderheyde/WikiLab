@@ -64,6 +64,7 @@ app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRed
 app.get('/session/username', auth.getUsername);
 app.post('/session/end', auth.loggingOut);
 app.get('/pages/:pagename', index.gettaPage);
+app.get('/pages/:pagename/edit', index.gettaPage)
 
 app.post('/editPost', redirect.editPage);
 app.post('/newPost', redirect.newPage);
