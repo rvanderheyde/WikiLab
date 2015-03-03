@@ -6,13 +6,10 @@ var exports = {};
 // Vote handling function
 exports.vote = function (req, res) {
   var data = req.body;
-  // might have to change this
   var name = data.username;
   var page = data.page;
   var vote = data.vote;
-  console.log('');
-  console.log(data);
-
+  
   User.findOne({name: name})
     .exec(function (err, user) {
       if (err) {
@@ -27,10 +24,6 @@ exports.vote = function (req, res) {
             } else {
               var up_index = user.upvotes.indexOf(page);
               var down_index = user.downvotes.indexOf(page);
-              console.log('PREVIOUS USER');
-              console.log(user);
-              console.log('UP INDEX: ' + up_index);
-              console.log('DOWN INDEX: ' + up_index);
               if (up_index !== -1) {
                 if (!vote) {
                   console.log('PREVIOUSLY UPVOTED, NOW DOWNVOTING');

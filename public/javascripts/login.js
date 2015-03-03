@@ -21,6 +21,7 @@
 				});
 
 				this.checkHome = function(){
+					//change view on homepage
 					var path = $location.path();
 					if(path.length > 1){
 						return true;

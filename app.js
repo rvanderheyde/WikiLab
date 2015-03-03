@@ -6,18 +6,19 @@ var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-// var session = require('client-session');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-
+//router files
 var index = require('./routes/index');
 var redirect = require('./routes/redirect');
 var auth = require('./routes/auth');
 
 var app = express();
+//Not Using handle bars
 // app.engine('html', exphbs({defaultLayout: 'main'}));
 // app.set('view engine', 'html');
 
+//environment variables
 var mongoURI = process.env.MONGOURI || "mongodb://localhost/test";
 var PORT = process.env.PORT || 3000;
 var CLIENTID= process.env.CLIENTID || require('./oauth.js').facebook.clientID;
@@ -57,24 +58,25 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Our routes handled by server
 app.get('/', index.homeRender);
 app.get('/db/pages', index.getPages);
-app.get('/auth/facebook', passport.authenticate('facebook'), auth.fbAuth);
-app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }), auth.fbAuthCallback);
 app.get('/session/username', auth.getUsername);
 app.post('/session/end', auth.loggingOut);
 app.get('/pages/:pagename', index.gettaPage);
 app.get('/pages/:pagename/edit', index.gettaPage);
 app.get('/user/:username', index.getUserinfo);
-
 app.post('/editPost', redirect.editPage);
 app.post('/newPost', redirect.newPage);
 app.post('/vote', redirect.vote);
+//Facebook login, not really part of our angular app.
+app.get('/auth/facebook', passport.authenticate('facebook'), auth.fbAuth);
+app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }), auth.fbAuthCallback);
 
 app.listen(PORT, function() {
   console.log("Application running on port:", PORT);
 });
-
+//not actually used
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
     res.send(401)

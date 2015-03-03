@@ -26,13 +26,11 @@ routes.fbAuthCallback = function(req, res){
 };
 
 routes.getUsername = function(req, res){
-  console.log(req.session.passport)
   if (emptyObjTest(req.session.passport) === true){
     res.send('error');
   } else {
     var username = req.session.passport.user.displayName;
     var obj = { userName: username};
-    console.log(obj)
     if (!username){
       res.send('No User');
     } else {
@@ -47,7 +45,6 @@ function emptyObjTest(obj){
 
 // Called by client when logging out to get rid of user credentials from session
 routes.loggingOut = function(req, res) {
-  // might have to change this depending on how we save things
   req.session.passport = {};
   req.session.userid = '';
   
