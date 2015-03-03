@@ -6,6 +6,7 @@ routes.fbAuth = function(req, res){
 };
 
 routes.fbAuthCallback = function(req, res){
+  //callback for facebook passport
   console.log('FB returns ' + req.session.passport.user.displayName);
   var username = req.session.passport.user.displayName;
   User.findOne({name: username}, function(error, user){
@@ -26,6 +27,7 @@ routes.fbAuthCallback = function(req, res){
 };
 
 routes.getUsername = function(req, res){
+  //find user from session
   if (emptyObjTest(req.session.passport) === true){
     res.send('error');
   } else {
