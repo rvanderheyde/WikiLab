@@ -1,14 +1,18 @@
+// Routes for all get requests
+
 var path = require('path');
 var schema = require('./../models/schema');
 var User = schema.User;
 var Post = schema.Post;
-routes = {}
+routes = {};
 
+// Function to render home page
 routes.homeRender = function(req, res) {
   var url = path.resolve( __dirname + '../../views/main.html');
   res.sendFile(url);
 };
 
+// Function to get a list of all pages that have been created
 routes.getPages = function(req, res) {
   Post.find({}, function(err, data){
     if (err){ console.log(error); }
@@ -18,9 +22,10 @@ routes.getPages = function(req, res) {
   });
 };
 
+// Function to load a specific wiki page
 routes.gettaPage = function(req, res) {
   var url = req.params.pagename;
-  // ajax request from button
+  // If request was ajax request from button
   if (req.headers.accept.indexOf('json') > -1) {
     Post.findOne({url: url})
     .exec(function (err, post) {
@@ -36,12 +41,13 @@ routes.gettaPage = function(req, res) {
       }
     })
   } else {
-    // get request from refresh or typing url
+    // If request was get request from refresh or typing url
     var url = path.resolve( __dirname + '../../views/main.html');
     res.sendFile(url);
   }
 };
 
+// Function to get user upvotes and downvotes when on a wiki page
 routes.getUserinfo = function(req, res) {
   var name = req.params.username;
   User.findOne({name: name})

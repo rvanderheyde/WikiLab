@@ -7,8 +7,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {});
 
 // defining schema for users
-// for votes object,might need to use .commit()
-// https://groups.google.com/forum/#!topic/mongoose-orm/3wmwUX5Fve4
+// upvotes and downvotes will be arrays of all the urls this user has
+// upvoted or downvoted
 var userSchema = mongoose.Schema({
   name: String,
   upvotes: [String],
@@ -17,6 +17,7 @@ var userSchema = mongoose.Schema({
 
 exports.User = mongoose.model('User', userSchema);
 
+// defining schema for posts (pages)
 var postSchema = mongoose.Schema({
   url: String,
   title: String,

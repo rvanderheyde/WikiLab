@@ -1,3 +1,5 @@
+// Script to handle post requests from client side, and send back data
+
 var schema = require('./../models/schema');
 var User = schema.User;
 var Post = schema.Post;
@@ -10,6 +12,8 @@ exports.vote = function (req, res) {
   var page = data.page;
   var vote = data.vote;
   
+  // Find user and post for logged in user and page they are on, and modify
+  // objects for votes, upvotes, and downvotes
   User.findOne({name: name})
     .exec(function (err, user) {
       if (err) {
@@ -22,9 +26,11 @@ exports.vote = function (req, res) {
               console.log('could not find post');
               res.status(500).json(err);
             } else {
+              // See if url has been upvoted or downvoted by user
               var up_index = user.upvotes.indexOf(page);
               var down_index = user.downvotes.indexOf(page);
               if (up_index !== -1) {
+                // if page was previously upvoted by this user...
                 if (!vote) {
                   console.log('PREVIOUSLY UPVOTED, NOW DOWNVOTING');
                   post.votes -= 2;
@@ -35,6 +41,7 @@ exports.vote = function (req, res) {
                 }
                 user.upvotes.splice(up_index, 1);
               } else if (down_index !== -1) {
+                // if page was previously downvoted by this user...
                 if (vote) {
                   console.log('PREVIOUSLY DOWN, NOW UP');
                   post.votes += 2;
@@ -45,7 +52,7 @@ exports.vote = function (req, res) {
                 }
                 user.downvotes.splice(down_index, 1);
               } else {
-                // not upvoted or downvoted
+                // if page was not upvoted or downvoted by this user
                 if (vote) {
                   console.log('NEW AND UP')
                   post.votes += 1;
@@ -66,10 +73,6 @@ exports.vote = function (req, res) {
                       console.log('unable to save user');
                       res.status(500).json(err);
                     } else {
-                      console.log(user);
-                      User.findOne({name: name}, function (err, updated_user) {
-                        console.log(updated_user);
-                      })
                       res.json(post);
                     }
                   });
@@ -81,7 +84,7 @@ exports.vote = function (req, res) {
     });
 };
 
-// submit a new page
+// Function to create a new page
 exports.newPage = function (req, res) {
   var data = req.body;
 
@@ -89,10 +92,9 @@ exports.newPage = function (req, res) {
     .exec(function (err, post) {
       if (post) {
         // Change URL to URL + '2' if URL already exists in db
-        console.log('');
-        console.log('POST WITH DIS URL ALREADY EXIST THO');
         data.url += '2';
       }
+      // Create new post
       var post = new Post({
         url: data.url,
         title: data.title,
@@ -102,15 +104,12 @@ exports.newPage = function (req, res) {
         views: 0,
         votes: 0
       });
-      console.log('NEW POST YEEE');
-      console.log(post);
 
       post.save(function (err) {
         if (err) {
           console.log('Problem saving new post');
           res.status(500).json(err);
         } else {
-          console.log('yayy made a new post');
           // send post back to client
           res.json(post);
         }
@@ -118,12 +117,14 @@ exports.newPage = function (req, res) {
     });
 }
 
+// Function to edit a page
 exports.editPage = function (req, res) {
   var data = req.body;
   url = data.url;
   content = data.content;
   console.log(content);
 
+  // Find post for given url, and modify content based on req body
   Post.findOne({url: url})
     .exec(function (err, post) {
       if (err) {

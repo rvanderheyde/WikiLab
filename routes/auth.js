@@ -1,9 +1,9 @@
+// Script to handle facebook authentication
+
 routes = {};
 var User = require('../models/schema').User;
 
-routes.fbAuth = function(req, res){
-  
-};
+routes.fbAuth = function(req, res) {};
 
 routes.fbAuthCallback = function(req, res){
   //callback for facebook passport
@@ -11,8 +11,10 @@ routes.fbAuthCallback = function(req, res){
   var username = req.session.passport.user.displayName;
   User.findOne({name: username}, function(error, user){
     if (user) {
+      // if user exists, just redirect to home page
       res.redirect('/');
     } else {
+      // create new user if user doesnt exist
       var newUser = User({name: username, votes: []});
       newUser.save(function (err) {
         if (err) {
@@ -28,7 +30,7 @@ routes.fbAuthCallback = function(req, res){
 
 routes.getUsername = function(req, res){
   //find user from session
-  if (emptyObjTest(req.session.passport) === true){
+  if (emptyObjTest(req.session.passport) === true) {
     res.send('error');
   } else {
     var username = req.session.passport.user.displayName;
@@ -41,15 +43,14 @@ routes.getUsername = function(req, res){
   }
 };
 
-function emptyObjTest(obj){
+function emptyObjTest(obj) {
+  // function to test if object is empty
   return Object.keys(obj).length === 0;
 };
 
 // Called by client when logging out to get rid of user credentials from session
 routes.loggingOut = function(req, res) {
-  req.session.passport = {};
-  req.session.userid = '';
-  
+  req.session.passport = {};  
   // send something to client to change client
   res.send('logout');
 };
