@@ -90,37 +90,39 @@ exports.vote = function (req, res) {
 
 // submit a new page
 exports.newPage = function (req, res) {
-  Post.find({})
-    .exec(function (err, posts) {
-      console.log('THESE ALL THE POSTS BRUH');
-      console.log(posts)
-      console.log('')
-    })
-
   var data = req.body;
 
-  var post = new Post({
-    url: data.url,
-    title: data.title,
-    content: data.content,
-    locked: false,
-    author: data.user,
-    views: 0,
-    votes: 0
-  });
-  console.log('NEW POST YEEE');
-  console.log(post);
+  Post.findOne({url: data.url})
+    .exec(function (err, post) {
+      if (post) {
+        // Change URL to URL + '2' if URL already exists in db
+        console.log('');
+        console.log('POST WITH DIS URL ALREADY EXIST THO');
+        data.url += '2';
+      }
+      var post = new Post({
+        url: data.url,
+        title: data.title,
+        content: data.content,
+        locked: false,
+        author: data.user,
+        views: 0,
+        votes: 0
+      });
+      console.log('NEW POST YEEE');
+      console.log(post);
 
-  post.save(function (err) {
-    if (err) {
-      console.log('Problem saving new post');
-      res.status(500).json(err);
-    } else {
-      console.log('yayy made a new post');
-      // send post back to client
-      res.json(post);
-    }
-  });
+      post.save(function (err) {
+        if (err) {
+          console.log('Problem saving new post');
+          res.status(500).json(err);
+        } else {
+          console.log('yayy made a new post');
+          // send post back to client
+          res.json(post);
+        }
+      });
+    });
 }
 
 exports.editPage = function (req, res) {
