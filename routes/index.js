@@ -20,7 +20,9 @@ routes.getPages = function(req, res) {
 
 routes.gettaPage = function(req, res) {
   var url = req.params.pagename;
-  Post.findOne({url: url})
+  // ajax request from button
+  if (req.headers.accept.indexOf('json') > -1) {
+    Post.findOne({url: url})
     .exec(function (err, post) {
       if (err) {
         console.log('error getting page');
@@ -33,5 +35,11 @@ routes.gettaPage = function(req, res) {
         res.json(post);
       }
     })
+  } else {
+    // get request from refresh or typing url
+    var url = path.resolve( __dirname + '../../views/main.html');
+    res.sendFile(url);
+  }
+  
 };
 module.exports = routes;
