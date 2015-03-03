@@ -2,10 +2,10 @@
   <h1>{{page.data.title}}</h1>
   <h3>Written by {{page.data.author}}</h3>
   <p>{{page.data.content}}</p>
-  <a class="button small" href="{{page.data.url + '/edit'}}">Edit</a>
-  <div id='voting'>
+  <div ng-show="page.loggedIn()">
+    <a class="button small" href="{{page.data.url + '/edit'}}">Edit</a>
     <h6>{{page.data.votes}} Upvotes</h6>
-    <button ng-click='page.vote(true)' class="button tiny round">Upvote</button>
-    <button ng-click='page.vote(false)' class="button tiny round">Downvote</button>
+    <button ng-class="{selected: page.upvoted}" ng-click='page.vote(true)' class="button tiny round">Upvote</button>
+    <button ng-class="{selected: page.downvoted}" ng-click='page.vote(false)' class="button tiny round">Downvote</button>
   </div>
 </div>

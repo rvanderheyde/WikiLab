@@ -44,34 +44,60 @@
 
   app.controller('PageController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location){
     var page = this;
+    // page.upvoted = false;
+    // page.downvoted = false;
     var path = $location.path();
+    // sketchily getting /pages/ out of path
+    var url = $location.path().substring(7);
     console.log(path);
-    console.log($cookieStore.get('username'));
 
     $http.get(path)
       .success(function (data, status) {
+        console.log($cookieStore.get('username'));
+        // console.log($cookieStore.get('upvotes'));
+        // console.log($cookieStore.get('downvotes'));
         page.data = data;
+
       }).error(function (data, status) {
         alert(status + 'bruh you fucked this page up' + data);
       });
 
     var username = $cookieStore.get('username');
     if (username) {
-      $http.get()
+      var user_req = '/user/' + username;
+      $http.get(user_req)
+        .success(function (data, status) {
+          page.upvoted = (data.upvotes.indexOf(url) > -1);
+          page.downvoted = (data.downvotes.indexOf(url) > -1);
+        }).error(function (data, status) {
+          alert('Yea cant retrieve user info for vote button');
+        });
     }
 
     this.vote = function(up) {
       var data = {};
-      // sketchily getting /pages/ out of path
-      data.page = $location.path().substring(7);
+      data.page = url;
       data.vote = up;
       data.username = username;
       $http.post('/vote', data)
         .success(function (data, status) {
           page.data = data;
+          if (up) {
+            page.upvoted = !page.upvoted;
+            page.downvoted = false;
+          } else {
+            page.downvoted = !page.downvoted;
+            page.upvoted = false;
+          }
+          // page.upvoted = (data.upvotes.indexOf(url) > -1);
+          // page.downvoted = (data.downvotes.indexOf(url) > -1);
         }).error(function (data, status) {
           alert('shit is fucked, stop voting');
         });
+    };
+
+    this.loggedIn = function () {
+      return ($cookieStore.get('username'));
     };
 
   }]);

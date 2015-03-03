@@ -1,9 +1,19 @@
 #content {
+	margin-top: 2%;
 	margin-left: 2%;
+}
+
+#links {
+	margin-left: -2%;
 }
 
 ul li {
 	margin-left: 0;
 	list-style-type: none;
 	text-decoration: none;
+}
+
+.selected {
+	background-color: #d66;
+	font-weight: bold;
 }

@@ -40,6 +40,18 @@ routes.gettaPage = function(req, res) {
     var url = path.resolve( __dirname + '../../views/main.html');
     res.sendFile(url);
   }
-  
 };
+
+routes.getUserinfo = function(req, res) {
+  var name = req.params.username;
+  User.findOne({name: name})
+    .exec(function (err, user) {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        res.json(user);
+      }
+    });
+};
+
 module.exports = routes;
