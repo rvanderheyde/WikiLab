@@ -1,14 +1,25 @@
+#background {
+	background-image: url('../imgs/drink.jpg');
+	overflow: auto;
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	z-index:-1;
+	opacity:.15;
+}
+
 #content {
-	margin-top: 2%;
-	margin-left: 2%;
+	padding-top: 2%;
+	padding-left: 2%;
 }
 
 #links {
-	margin-left: -2%;
+	padding-left: -2%;
 }
 
 ul li {
-	margin-left: 0;
 	list-style-type: none;
 	text-decoration: none;
 }
