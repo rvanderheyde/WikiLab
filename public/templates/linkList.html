@@ -1,8 +1,16 @@
- <div id='links' ng-show="linkCtrl.checkPage()">
+ <div id='links' ng-show="linkCtrl.checkPage()" class="no-bullet">
   <ul>
     <h5>Pages</h5>
-    <li class="no-bullet" ng-repeat="link in linkCtrl.paths">
+    <li ng-repeat="link in linkCtrl.paths">
       <a class="button small" href="{{'/pages/'+ link.url}}">{{link.title}}</a>
     </li>
   </ul>
+</div>
+<div ng-show="linkCtrl.checkPage() && linkCtrl.loggedIn()">
+  <form id='new_page' name="pageForm" ng-submit="pageForm.$valid && linkCtrl.makePost()">
+    Title <input ng-model='linkCtrl.page.title' class='blank' type='text' name='title' required>
+    Unique URL <input ng-model='linkCtrl.page.url' class='blank' type='text' name='url' required>
+    Content <textarea ng-model='linkCtrl.page.content' class='blank' name='textarea' rows='10' columns='50' required></textarea>
+    <input type='submit' value='Create new page!'>
+  </form>
 </div>
