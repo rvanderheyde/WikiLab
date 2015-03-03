@@ -102,8 +102,7 @@
       // sketchily getting /pages/ out of path
       data.page = $location.path().substring(7);
       data.vote = up;
-      // temp fix while login is broken
-      data.username = 'Rahil Dedhia';
+      data.username = username;
       $http.post('/vote', data)
         .success(function (data, status) {
           page.data = data;
