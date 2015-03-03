@@ -6,7 +6,7 @@
 	<section class="top-bar-section">
 		<ul class="left">
 			<li ng-show="nav.username"><button ng-click="nav.eatCookie()">Logout</button></li>
-			<li ng-hide="nav.username"><a class="button" href="/auth/facebook">Login</a></li>
+			<li ng-hide="nav.username"><a class="button" href="/auth/facebook" target="_self">Login</a></li>
 		</ul>
 	    <ul class="right">
 	      <li ng-show="nav.username"><button>{{nav.username}}</button></li>

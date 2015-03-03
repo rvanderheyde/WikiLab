@@ -59,7 +59,7 @@ app.use(passport.session());
 
 app.get('/', index.homeRender);
 app.get('/db/pages', index.getPages);
-app.get('/auth/facebook',passport.authenticate('facebook'), auth.fbAuth);
+app.get('/auth/facebook', passport.authenticate('facebook'), auth.fbAuth);
 app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }), auth.fbAuthCallback);
 app.get('/session/username', auth.getUsername);
 app.post('/session/end', auth.loggingOut);
@@ -75,5 +75,5 @@ app.listen(PORT, function() {
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-    res.redirect('/')
+    res.send(401)
 }

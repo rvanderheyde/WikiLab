@@ -6,14 +6,20 @@
       templateUrl: '../templates/page.html',
       controller: 'PageController',
       controllerAs: 'page'
-    }).when('/pages/:pagename/edit',{
+    }).when('/pages/:pagename/edit', {
       templateUrl: '../templates/edit.html',
       controller: 'EditController',
       controllerAs: 'edit'
-    });
+    }).otherwise({redirectTo: '/'});
 
-    $locationProvider.html5Mode({ enabled: true, requireBase: false});
-  }]);
+
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    });
+  }]);  
+
+  
 
   app.controller('BodyController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location) {
     this.page = {};
@@ -69,7 +75,16 @@
   }]);
 
   app.controller('PageController', ['$cookieStore', '$http', '$location', function($cookieStore, $http, $location){
-    
+    var page = this;
+    var path = $location.path();
+    console.log(path);
+
+    $http.get(path)
+      .success(function (data, status) {
+        page.data = data;
+      }).error(function (data, status) {
+        alert(status + 'bruh you fucked this page up' + data);
+      })
   }]);
 
 })();
