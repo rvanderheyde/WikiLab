@@ -83,6 +83,7 @@
     var page = this;
     var path = $location.path();
     console.log(path);
+    console.log($cookieStore.get('username'));
 
     $http.get(path)
       .success(function (data, status) {
@@ -91,13 +92,25 @@
         alert(status + 'bruh you fucked this page up' + data);
       });
 
-    this.vote = function(up) {
-      var data = {};
-      data.page = $location.path();
-      data.vote = up;
-      console.log(data);
+    var username = $cookieStore.get('username');
+    if (username) {
+      $http.get()
     }
 
+    this.vote = function(up) {
+      var data = {};
+      // sketchily getting /pages/ out of path
+      data.page = $location.path().substring(7);
+      data.vote = up;
+      // temp fix while login is broken
+      data.username = 'Rahil Dedhia';
+      $http.post('/vote', data)
+        .success(function (data, status) {
+          page.data = data;
+        }).error(function (data, status) {
+          alert('shit is fucked, stop voting');
+        });
+    };
 
   }]);
 

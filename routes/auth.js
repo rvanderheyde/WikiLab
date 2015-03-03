@@ -12,7 +12,7 @@ routes.fbAuthCallback = function(req, res){
 		if (user) {
 			res.redirect('/');
 		} else {
-			var newUser = User({name: username, votes: {}})
+			var newUser = User({name: username, votes: []});
 			newUser.save();
 			res.redirect('/')
 		}
